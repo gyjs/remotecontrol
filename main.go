@@ -15,7 +15,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
+	"time"
 )
 
 func shutdown(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +29,7 @@ func shutdown(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println(err.Error())
 	}
 
-	_, _ = w.Write([]byte("success"))
+	_, _ = w.Write([]byte("Status: Shutdown Success"))
 }
 
 func termination(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +41,7 @@ func termination(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println(err.Error())
 	}
 
-	_, _ = w.Write([]byte("success"))
+	_, _ = w.Write([]byte("Status: Termination Success"))
 }
 
 func restartcc(w http.ResponseWriter, r *http.Request) {
@@ -51,7 +53,7 @@ func restartcc(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println(err.Error())
 	}
 
-	_, _ = w.Write([]byte("success"))
+	_, _ = w.Write([]byte("Status: Restart Success"))
 }
 
 func lock(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +65,13 @@ func lock(w http.ResponseWriter, r *http.Request) {
 		//fmt.Println(err.Error())
 	}
 
-	_, _ = w.Write([]byte("success"))
+	_, _ = w.Write([]byte("Status: Lock Screen Success"))
+}
+
+func kill(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("感谢您的使用，拜拜！^-^")
+	time.Sleep(3 * time.Second)
+	os.Exit(3)
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -83,6 +91,7 @@ func main() {
 	mux.HandleFunc("/restart-jcegbCFFGRWYwYq1Y4bH", restartcc)
 	mux.HandleFunc("/stop-jcegbCFFGRWYwYq1Y4bH", termination)
 	mux.HandleFunc("/lock-jcegbCFFGRWYwYq1Y4bH", lock)
+	mux.HandleFunc("/kill-jcegbCFFGRWYwYq1Y4bH", kill)
 	err := http.ListenAndServe(":25250", mux)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
