@@ -20,7 +20,7 @@ import (
 
 func shutdown(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
-	fmt.Println("状态: 关机执行成功！")
+	fmt.Println("状态: 关机执行成功")
 	command := exec.Command("cmd", "/C", "shutdown -s -t 10")
 	err := command.Run()
 	if err != nil {
@@ -32,7 +32,7 @@ func shutdown(w http.ResponseWriter, r *http.Request) {
 
 func termination(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
-	fmt.Println("状态: 终止执行成功！")
+	fmt.Println("状态: 终止执行成功")
 	command := exec.Command("cmd", "/C", "shutdown -a")
 	err := command.Run()
 	if err != nil {
@@ -44,7 +44,7 @@ func termination(w http.ResponseWriter, r *http.Request) {
 
 func restartcc(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
-	fmt.Println("状态: 重启执行成功！")
+	fmt.Println("状态: 重启执行成功")
 	command := exec.Command("cmd", "/C", "shutdown -r -t 10")
 	err := command.Run()
 	if err != nil {
@@ -56,7 +56,7 @@ func restartcc(w http.ResponseWriter, r *http.Request) {
 
 func lock(w http.ResponseWriter, r *http.Request) {
 	_ = r.ParseForm()
-	fmt.Println("状态: 锁屏执行成功！")
+	fmt.Println("状态: 锁屏执行成功")
 	command := exec.Command("cmd", "/C", "rundll32.exe user32.dll LockWorkStation")
 	err := command.Run()
 	if err != nil {
@@ -72,9 +72,11 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	C.SetTitle()
-	fmt.Println("GYJ 远程控制服务")
-	fmt.Println("\n日志:")
-	fmt.Println("状态：启动成功")
+	fmt.Println("GYJ 远程控制服务 [版本 1.0.0.0]")
+	fmt.Println("(C) 2021 GYJ Corporation. 保留所有权利。")
+	fmt.Println("\n\n运行日志:")
+	fmt.Println("———————————")
+	fmt.Println("状态：服务启动成功")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
 	mux.HandleFunc("/shutdown-jcegbCFFGRWYwYq1Y4bH", shutdown)
